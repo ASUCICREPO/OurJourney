@@ -72,6 +72,10 @@ AWS_REGION = os.environ.get("AWS_REGION")
 if not AWS_REGION:
     raise ValueError("AWS_REGION environment variable is required")
 
+COUNTY_RESOURCES_TABLE_NAME = os.environ.get("COUNTY_RESOURCES_TABLE")
+if not COUNTY_RESOURCES_TABLE_NAME:
+    raise ValueError("COUNTY_RESOURCES_TABLE environment variable is required")
+
 # ============================================================================
 # SCRAPER CONFIGURATION CONSTANTS
 # ============================================================================

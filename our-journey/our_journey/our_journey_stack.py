@@ -225,6 +225,20 @@ class OurJourneyStack(Stack):
         )
 
 
+        # County Resources Table - maps NC county names to their PDF S3 keys and source URLs
+        # Written by the scraper Lambda, read by the PDF serve Lambda
+        county_resources_table = dynamodb.Table(
+            self,
+            "CountyResourcesTable",
+            partition_key=dynamodb.Attribute(
+                name="county",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=cdk.RemovalPolicy.DESTROY,
+            point_in_time_recovery=False,
+        )
+
         # Create a WebSocket API
         web_socket_api = apigwv2.WebSocketApi(self, "web_socket_api",)
         apigwv2.WebSocketStage(
@@ -337,6 +351,19 @@ class OurJourneyStack(Stack):
             )
         )
 
+        # DynamoDB permissions for county resources table (scoped, not full access)
+        scraper_role.add_to_policy(
+            iam.PolicyStatement(
+                sid="CountyResourcesDynamoDBAccess",
+                effect=iam.Effect.ALLOW,
+                actions=[
+                    "dynamodb:PutItem",
+                    "dynamodb:UpdateItem",
+                ],
+                resources=[county_resources_table.table_arn]
+            )
+        )
+
         # CloudWatch Logs permissions
         scraper_role.add_managed_policy(
             iam.ManagedPolicy.from_aws_managed_policy_name(
@@ -359,7 +386,8 @@ class OurJourneyStack(Stack):
             layers=[scraper_layer],
             environment={
                 "DOC_BUCKET_NAME": doc_bucket.bucket_name,
-                "KNOWLEDGE_BASE_ID": kb.knowledge_base_id
+                "KNOWLEDGE_BASE_ID": kb.knowledge_base_id,
+                "COUNTY_RESOURCES_TABLE": county_resources_table.table_name,
             },
             description="Scrapes OurJourney website and syncs Knowledge Base"
         )
@@ -491,6 +519,11 @@ class OurJourneyStack(Stack):
         CfnOutput(self, "conversations-table-name",
             value = conversations_table.table_name,
             description="DynamoDB table for conversations"
+        )
+
+        CfnOutput(self, "county-resources-table-name",
+            value = county_resources_table.table_name,
+            description="DynamoDB table mapping NC counties to their PDF resource guides"
         )
 
         CfnOutput(self, "followup-table-name",

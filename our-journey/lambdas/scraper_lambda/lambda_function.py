@@ -1,10 +1,11 @@
 import json
 import logging
 import traceback
-from utilities import (
+from cfn_utils import (
     handle_create_request, handle_update_request, handle_delete_request,
-    send_cfn_response, scrape_and_sync
+    send_cfn_response
 )
+from orchestrator import scrape_and_sync
 from constants import CFN_SUCCESS, RESPONSE_MESSAGES
 
 import constants  # This configures logging
