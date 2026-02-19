@@ -16,8 +16,7 @@ our-journey-frontend/.pytest_cache/
 our-journey-frontend/.venv/
 our-journey-frontend/*.egg-info/
 our-journey-frontend/.cdk.staging/
-our-journey-frontend/cdk.out/
-
+our-journey-frontend/cdk.out
 our-journey-frontend/build.zip
 
 
