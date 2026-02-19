@@ -23,6 +23,7 @@ export const ChatScreen = () => {
   const [isInputDisabled, setIsInputDisabled] = useState(false);
   const [currentInfoMessage, setCurrentInfoMessage] = useState(null);
   const [currentAssistantMessageId, setCurrentAssistantMessageId] = useState(null);
+  const [countyResource, setCountyResource] = useState(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Helper function to convert literal \n strings to actual newlines
@@ -139,6 +140,11 @@ export const ChatScreen = () => {
         setCurrentAssistantMessageId(null);
       };
 
+      // Define callback for county PDF resource - set once, ignore if already received
+      const onCountyResourceReceived = (resource) => {
+        setCountyResource(prev => prev ?? resource);
+      };
+
       // WebSocket call with all callbacks
       await webSocketManager.sendMessageAndWaitForResponse(
         currentInput,
@@ -146,7 +152,8 @@ export const ChatScreen = () => {
         onBotMessageReceived,
         onInfoReceived,
         onMessageComplete,
-        userInfo // Pass user info from context
+        userInfo,
+        onCountyResourceReceived
       );
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -374,6 +381,30 @@ export const ChatScreen = () => {
                 <span className="text-sm font-medium text-gray-800">{cat.name}</span>
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* County Resource Banner - shown once received, persists for the session */}
+      {countyResource && (
+        <div className="px-4 py-2 bg-[#E8F5E9] border-t border-[#A5D6A7]">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-lg flex-shrink-0">📄</span>
+              <p className="text-sm text-[#1B5E20] font-medium truncate">
+                {language === 'en'
+                  ? `${countyResource.county} County Reentry Resource Guide`
+                  : `Guía de Recursos de Reingreso del Condado ${countyResource.county}`}
+              </p>
+            </div>
+            <a
+              href={countyResource.source_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 text-xs font-semibold px-3 py-1.5 bg-[#1B5E20] text-white rounded-full hover:bg-[#388E3C] transition-colors"
+            >
+              {language === 'en' ? 'Download' : 'Descargar'}
+            </a>
           </div>
         </div>
       )}

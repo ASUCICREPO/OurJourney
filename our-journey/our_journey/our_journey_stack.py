@@ -267,6 +267,7 @@ class OurJourneyStack(Stack):
                 "GUARDRAIL_VERSION": guardrail.guardrail_version,
                 "CONVERSATIONS_TABLE": conversations_table.table_name,
                 "FOLLOWUP_TABLE": followup_table.table_name,
+                "COUNTY_RESOURCES_TABLE": county_resources_table.table_name,
             }
         )
 

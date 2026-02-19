@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 dynamodb = boto3.resource('dynamodb')
 conversations_table = dynamodb.Table(constants.CONVERSATIONS_TABLE)
 followup_table = dynamodb.Table(constants.FOLLOWUP_TABLE)
+county_resources_table = dynamodb.Table(constants.COUNTY_RESOURCES_TABLE)
 
 
 # ============================================================================
@@ -448,3 +449,40 @@ def get_latest_conversation(conversation_id):
         logger.error(f"Failed to get latest conversation: {e}")
         logger.debug(f"Traceback: {traceback.format_exc()}")
         raise
+
+
+# ============================================================================
+# COUNTY RESOURCES
+# ============================================================================
+
+def get_county_resource(county_name):
+    """
+    Retrieve the PDF resource mapping for a given NC county.
+    Written by the scraper Lambda, read here to serve the PDF to the user.
+
+    Args:
+        county_name: County name exactly as stored by the scraper, e.g. "Wake" or "New Hanover"
+
+    Returns:
+        dict with keys 's3_key', 'source_url', 'last_updated' — or None if not found
+    """
+    logger.info(f"Looking up county resource for: {county_name}")
+
+    try:
+        response = county_resources_table.get_item(
+            Key={"county": county_name}
+        )
+
+        item = response.get("Item")
+
+        if item:
+            logger.info(f"Found county resource for '{county_name}': {item.get('s3_key')}")
+        else:
+            logger.warning(f"No county resource found for '{county_name}'")
+
+        return item
+
+    except Exception as e:
+        logger.error(f"Failed to retrieve county resource for '{county_name}': {e}")
+        logger.debug(f"Traceback: {traceback.format_exc()}")
+        return None

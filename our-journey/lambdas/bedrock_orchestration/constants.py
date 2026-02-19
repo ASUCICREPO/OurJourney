@@ -54,6 +54,10 @@ FOLLOWUP_TABLE = os.environ.get("FOLLOWUP_TABLE")
 if not FOLLOWUP_TABLE:
     raise ValueError("FOLLOWUP_TABLE environment variable is required")
 
+COUNTY_RESOURCES_TABLE = os.environ.get("COUNTY_RESOURCES_TABLE")
+if not COUNTY_RESOURCES_TABLE:
+    raise ValueError("COUNTY_RESOURCES_TABLE environment variable is required")
+
 GUARDRAILS_CONFIG_STREAMING = {
         'guardrailIdentifier': GUARDRAIL_ID,
         'guardrailVersion': GUARDRAIL_VERSION,

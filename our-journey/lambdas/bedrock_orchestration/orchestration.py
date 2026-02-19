@@ -9,6 +9,7 @@ from utilities import (
     parse_and_send_response,    
     execute_knowledge_base_query,
     format_results_for_response,
+    send_to_gateway,
 )
 import dynamodb_utils
 import followup_detector
@@ -85,6 +86,26 @@ def orchestrate(event):
             logger.info(f"Using existing conversation ID: {conversation_id}")
 
         logger.info(f"Parsed {len(chatHistory)} messages")
+
+        # Look up and send the county PDF resource before streaming the AI response
+        # so the frontend can display a download button while the answer streams
+        county = userInfo.get("county")
+        if county:
+            county_resource = dynamodb_utils.get_county_resource(county)
+            if county_resource:
+                send_to_gateway(connectionId, {
+                    "type": "countyResource",
+                    "data": {
+                        "county": county_resource["county"],
+                        "source_url": county_resource["source_url"],
+                        "s3_key": county_resource["s3_key"],
+                    }
+                })
+                logger.info(f"Sent county resource for '{county}' to client")
+            else:
+                logger.warning(f"No county resource available for '{county}' - skipping")
+        else:
+            logger.info("No county in userInfo - skipping county resource lookup")
 
         # Generate response
         response = respond_to_query(chatHistory=chatHistory, userInfo=userInfo)

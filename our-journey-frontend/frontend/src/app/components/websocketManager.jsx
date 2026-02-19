@@ -8,6 +8,7 @@ class WebSocketManager {
     this.messageCallback = null;
     this.infoCallback = null; // For temporary info messages
     this.completionCallback = null; // For when message is complete
+    this.countyResourceCallback = null; // For county PDF resource data
     this.currentMessage = ''; // Track the current streaming message
     this.hasContent = false; // Track if current message has content for break token validation
     this.shouldCreateNewMessage = false; // Track if next delta should create new message
@@ -203,6 +204,13 @@ class WebSocketManager {
         this.infoCallback(infoMessage);
       }
     }
+    else if (data.type === 'countyResource') {
+      // Handle county PDF resource data sent before the AI stream starts
+      console.log('County resource received:', data.data);
+      if (this.countyResourceCallback) {
+        this.countyResourceCallback(data.data);
+      }
+    }
     else {
       // Handle legacy format or other message types
       if (data.message && this.messageCallback) {
@@ -258,6 +266,7 @@ class WebSocketManager {
     this.shouldCreateNewMessage = false;
     this.infoCallback = null;
     this.completionCallback = null;
+    this.countyResourceCallback = null;
   }
 
   // Get connection status
@@ -268,11 +277,12 @@ class WebSocketManager {
   }
 
   // Complete send message workflow (connect -> send -> wait for response -> close on messageStop)
-  async sendMessageAndWaitForResponse(message, messages, onMessageReceived, onInfoReceived = null, onMessageComplete = null, userInfo = null) {
+  async sendMessageAndWaitForResponse(message, messages, onMessageReceived, onInfoReceived = null, onMessageComplete = null, userInfo = null, onCountyResourceReceived = null) {
     try {
       this.messageCallback = onMessageReceived;
       this.infoCallback = onInfoReceived;
       this.completionCallback = onMessageComplete;
+      this.countyResourceCallback = onCountyResourceReceived;
       await this.connect();
       await this.sendMessage(message, messages, userInfo);
       // Connection will be closed automatically when messageStop is received
