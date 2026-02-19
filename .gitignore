@@ -8,6 +8,16 @@ our-journey/*.egg-info/
 our-journey/.cdk.staging/
 our-journey/cdk.out/
 
+
+our-journey-frontend/*.swp
+our-journey-frontend/package-lock.json
+our-journey-frontend/__pycache__/
+our-journey-frontend/.pytest_cache/
+our-journey-frontend/.venv/
+our-journey-frontend/*.egg-info/
+our-journey-frontend/.cdk.staging/
+our-journey-frontend/cdk.out/
+
 our-journey-frontend/build.zip
 
 
