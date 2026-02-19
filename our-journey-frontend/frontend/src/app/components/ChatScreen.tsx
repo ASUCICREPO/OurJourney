@@ -209,8 +209,8 @@ export const ChatScreen = () => {
       {/* Header */}
       <div className="bg-white shadow-sm p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#388E3C] to-[#81C784] rounded-full flex items-center justify-center">
-            <span className="text-white text-xl">🤖</span>
+          <div className="w-10 h-10">
+            <img src="/Robin.png" alt="JoJo" className="w-full h-full object-contain" />
           </div>
           <div>
             <h2 className="font-semibold text-[#212121]">JoJo</h2>
@@ -299,8 +299,8 @@ export const ChatScreen = () => {
           <div key={message.id}>
             {message.sender === 'bot' ? (
               <div className="flex gap-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#388E3C] to-[#81C784] rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-sm">🤖</span>
+                <div className="w-8 h-8 flex-shrink-0">
+                  <img src="/Robin.png" alt="JoJo" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex-1">
                   <div className="bg-[#E8F5E9] rounded-2xl rounded-tl-none p-4 max-w-[80%]">
@@ -351,8 +351,8 @@ export const ChatScreen = () => {
         {/* Info Message Display */}
         {currentInfoMessage && (
           <div className="flex gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-[#388E3C] to-[#81C784] rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-white text-sm">🤖</span>
+            <div className="w-8 h-8 flex-shrink-0">
+              <img src="/Robin.png" alt="JoJo" className="w-full h-full object-contain" />
             </div>
             <div className="flex-1">
               <div className="bg-[#E8F5E9] rounded-2xl rounded-tl-none p-4 max-w-[80%]">

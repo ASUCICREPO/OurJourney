@@ -78,8 +78,8 @@ export const WelcomeScreen = () => {
       <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-6">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center">
           <div className="mb-6">
-            <div className="w-24 h-24 mx-auto bg-gradient-to-br from-[#388E3C] to-[#81C784] rounded-full flex items-center justify-center shadow-md animate-pulse">
-              <div className="text-white text-4xl">🤖</div>
+            <div className="w-24 h-24 mx-auto animate-pulse">
+              <img src="/Robin.png" alt="JoJo" className="w-full h-full object-contain" />
             </div>
           </div>
           <p className="text-gray-700">
@@ -119,8 +119,8 @@ export const WelcomeScreen = () => {
 
         {/* JoJo Avatar */}
         <div className="mb-6">
-          <div className="w-24 h-24 mx-auto bg-gradient-to-br from-[#388E3C] to-[#81C784] rounded-full flex items-center justify-center shadow-md">
-            <div className="text-white text-4xl">🤖</div>
+          <div className="w-24 h-24 mx-auto">
+            <img src="/Robin.png" alt="JoJo" className="w-full h-full object-contain" />
           </div>
         </div>
 

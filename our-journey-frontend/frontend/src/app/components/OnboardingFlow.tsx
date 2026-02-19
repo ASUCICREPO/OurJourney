@@ -62,8 +62,8 @@ export const OnboardingFlow = () => {
       <div className="bg-white shadow-sm p-4">
         <div className="max-w-md mx-auto">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#388E3C] to-[#81C784] rounded-full flex items-center justify-center">
-              <span className="text-white text-xl">🤖</span>
+            <div className="w-10 h-10">
+              <img src="/Robin.png" alt="JoJo" className="w-full h-full object-contain" />
             </div>
             <div>
               <h2 className="font-semibold text-[#212121]">JoJo</h2>
