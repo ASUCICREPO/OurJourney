@@ -35,9 +35,13 @@ def get_prompt(results=None, userInfo=None):
     logger.info(f"Getting prompt")
     
     try:
+        # Remove the 'language' field from userInfo before injecting into prompt
+        # to prevent the model from interpreting it as a response language directive
+        prompt_user_info = {k: v for k, v in (userInfo or {}).items() if k != "language"}
+        
         return [
             {
-                "text": prompt.prompt.format(results=results, userInfo=json.dumps(userInfo)), 
+                "text": prompt.prompt.format(results=results, userInfo=json.dumps(prompt_user_info)), 
             }
         ]
         

@@ -70,7 +70,7 @@ def orchestrate(event):
         # Parse request body
         body = json.loads(event["body"])
         chatHistory = body.get("messages", [])
-        userInfo = body.get("userInfo", {})
+        userInfo = body.get("userInfo") or {}
         
         # Apply default values to userInfo
         userInfo = apply_default_user_info(userInfo)
