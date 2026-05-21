@@ -91,16 +91,16 @@ export const MOCK_RESOURCES: Resource[] = [
 ];
 
 export const RESOURCE_CATEGORIES = [
-  { id: 'id-documents', name: 'ID & Documents', icon: 'CreditCard' },
-  { id: 'housing', name: 'Housing', icon: 'Home' },
-  { id: 'jobs', name: 'Jobs & Training', icon: 'Briefcase' },
-  { id: 'legal', name: 'Legal Help', icon: 'Scale' },
-  { id: 'health', name: 'Health & Mental Health', icon: 'Heart' },
-  { id: 'transportation', name: 'Transportation', icon: 'Bus' },
-  { id: 'benefits', name: 'Benefits & Money', icon: 'DollarSign' },
-  { id: 'education', name: 'Education', icon: 'GraduationCap' },
-  { id: 'family', name: 'Family Support', icon: 'Users' },
-  { id: 'probation', name: 'Probation & Parole', icon: 'ClipboardList' },
-  { id: 'technology', name: 'Technology Help', icon: 'Smartphone' },
-  { id: 'crisis', name: 'Crisis & Emergency', icon: 'AlertCircle' }
+  { id: 'id-documents', name: 'ID & Documents', nameEs: 'Identificación y Documentos', icon: 'CreditCard' },
+  { id: 'housing', name: 'Housing', nameEs: 'Vivienda', icon: 'Home' },
+  { id: 'jobs', name: 'Jobs & Training', nameEs: 'Empleo y Capacitación', icon: 'Briefcase' },
+  { id: 'legal', name: 'Legal Help', nameEs: 'Ayuda Legal', icon: 'Scale' },
+  { id: 'health', name: 'Health & Mental Health', nameEs: 'Salud y Salud Mental', icon: 'Heart' },
+  { id: 'transportation', name: 'Transportation', nameEs: 'Transporte', icon: 'Bus' },
+  { id: 'benefits', name: 'Benefits & Money', nameEs: 'Beneficios y Dinero', icon: 'DollarSign' },
+  { id: 'education', name: 'Education', nameEs: 'Educación', icon: 'GraduationCap' },
+  { id: 'family', name: 'Family Support', nameEs: 'Apoyo Familiar', icon: 'Users' },
+  { id: 'probation', name: 'Probation & Parole', nameEs: 'Libertad Condicional', icon: 'ClipboardList' },
+  { id: 'technology', name: 'Technology Help', nameEs: 'Ayuda Tecnológica', icon: 'Smartphone' },
+  { id: 'crisis', name: 'Crisis & Emergency', nameEs: 'Crisis y Emergencia', icon: 'AlertCircle' }
 ];
