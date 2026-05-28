@@ -43,11 +43,27 @@ export const ChatScreen = () => {
           : `¡Hola${userInfo?.county ? '' : ''}! ¿En qué puedo ayudarte hoy?`,
         sender: 'bot',
         timestamp: new Date(),
-        quickReplies: ['Housing', 'Jobs', 'Legal Help', 'Healthcare', 'Crisis Help']
+        quickReplies: language === 'en'
+          ? ['Housing', 'Jobs', 'Legal Help', 'Healthcare', 'Crisis Help']
+          : ['Vivienda', 'Empleo', 'Ayuda Legal', 'Salud', 'Ayuda de Crisis']
       };
       addMessage(welcomeMsg);
     }
   }, []);
+
+  // When language changes and only the welcome message exists, update it
+  useEffect(() => {
+    if (messages.length === 1 && messages[0].id === '1') {
+      updateMessage('1', {
+        text: language === 'en'
+          ? `Hi${userInfo?.county ? ' there' : ''}! What can I help you with today?`
+          : `¡Hola${userInfo?.county ? '' : ''}! ¿En qué puedo ayudarte hoy?`,
+        quickReplies: language === 'en'
+          ? ['Housing', 'Jobs', 'Legal Help', 'Healthcare', 'Crisis Help']
+          : ['Vivienda', 'Empleo', 'Ayuda Legal', 'Salud', 'Ayuda de Crisis']
+      });
+    }
+  }, [language]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -152,7 +168,7 @@ export const ChatScreen = () => {
         onBotMessageReceived,
         onInfoReceived,
         onMessageComplete,
-        userInfo,
+        { ...userInfo, language },
         onCountyResourceReceived
       );
     } catch (error) {
@@ -375,10 +391,10 @@ export const ChatScreen = () => {
             {RESOURCE_CATEGORIES.slice(0, 6).map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => handleCategoryClick(cat.name)}
+                onClick={() => handleCategoryClick(language === 'es' && cat.nameEs ? cat.nameEs : cat.name)}
                 className="p-3 bg-white rounded-xl border border-gray-200 hover:border-[#388E3C] hover:bg-[#E8F5E9] transition-all text-left"
               >
-                <span className="text-sm font-medium text-gray-800">{cat.name}</span>
+                <span className="text-sm font-medium text-gray-800">{language === 'es' && cat.nameEs ? cat.nameEs : cat.name}</span>
               </button>
             ))}
           </div>
